@@ -105,12 +105,12 @@ if (argsparse.mode === "cluster" || process.env.MODE === "cluster") {
         }    
     } else {
         httpServer.listen(port, () => {
-            logger.info(`escuchando desafio 38 en puerto ${port}, pid: ${process.pid}`);
+            logger.info(`escuchando desafio 42 en puerto ${port}, pid: ${process.pid}`);
         });
     }
 } else {
     httpServer.listen(port, () => {
-        logger.info(`escuchando desafio 38 en puerto ${port}, pid: ${process.pid}`);
+        logger.info(`escuchando desafio 42 en puerto ${port}, pid: ${process.pid}`);
     });
 } 
 
@@ -138,3 +138,5 @@ ioServer.on('connection', (socket) => {
         }) (product);
     });
 });
+
+module.exports = { app };

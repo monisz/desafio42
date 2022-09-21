@@ -21,7 +21,8 @@ class ProductDaoMongoDb {
 
     async getProductById(id) {
         const dto = await this.clientMongoDb.getById(id);
-        return Product.fromDTO(dto[0]);
+        if (!dto) return dto
+        else return Product.fromDTO(dto[0]);
     }
 
     async getProducts() {

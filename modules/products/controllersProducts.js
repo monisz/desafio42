@@ -1,5 +1,5 @@
 const { ProductService } = require(`./serviceProducts`);
-
+const logger = require('../../utils/loggers/winston');
 const productService = new ProductService();
 
 //Vista de todos los productos
@@ -9,9 +9,9 @@ const getAllProducts = async (req, res) => {
     const user = req.session.user;
     const idCart = req.session.cart;
     const admin = process.env.ADMIN;
-    //Para poder hacer la petición con axios
-    /* res.send(products) */
-    res.render('products', {products, user, admin, idCart});
+    //Para poder hacer la petición con axios y test
+    res.send(products)
+    /* res.render('products', {products, user, admin, idCart}) */;
 };
 
 
@@ -21,26 +21,24 @@ const getProductById = async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).send({error: "el parámetro no es un número"});
     const productFinded = await productService.getProduct(id);
-    let products = {};
     if (!productFinded) {
-        res.status(404);
         logger.info("prod no encontrado");
+        res.status(404).send("producto no encontrado");
     }
     else {
-        products = productsToShow(productFinded);
+        res.send(productFinded)
     }
-    res.render('products', {products, user});
+    /* res.render('products', {products, user}); */
 };
 
 
 //Para agregar un producto
-const addProduct = (req, res) => {
+const addProduct = async (req, res) => {
     const newProduct = req.body;
-    console.log(newProduct)
-    const newId = productService.addProductToList(newProduct);
+    const newId = await productService.addProductToList(newProduct);
+    newProduct.id = newId
     /* productService.getListProducts(); */
-        res.send('producto agregado');
-    /* res.render('products', {products, user}); */
+    res.send(newProduct);
 }
 
 //Recibe y actualiza un producto por id

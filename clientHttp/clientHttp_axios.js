@@ -5,9 +5,9 @@ const getProducts = async () => {
     console.log(response.data);
 };
 
-/* getProducts() */
-/*     .then(() => console.log("Request finalizado")) */
-/*     .catch(console.error); */
+getProducts()
+    .then(() => console.log("Request finalizado"))
+    .catch(console.error);
 
 const addProduct = async () => {
     const response = await axios.post('http://localhost:8080/api/productos', {
@@ -48,6 +48,6 @@ const deleteProduct = async () => {
     console.log(response.data);
 };
 
-deleteProduct()
-    .then(() => console.log("Producto eliminado Axios"))
-    .catch(console.error);
+/* deleteProduct() */
+/*     .then(() => console.log("Producto eliminado Axios")) */
+/*     .catch(console.error); */
