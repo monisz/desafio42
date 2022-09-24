@@ -47,6 +47,7 @@ class ClientMongoDb {
         }
         catch (error) {
             logger.error(`error al reemplazar datos ${error}`);
+            return null
         }
     }
 
@@ -87,7 +88,8 @@ class ClientMongoDb {
 
     async deleteById(idSearch) {
         try {
-            return await this.collection.deleteOne({id: idSearch});
+            const result = await this.collection.deleteOne({id: idSearch});
+            return result.deletedCount
         }
         catch (error) {
             logger.error(`error en deleteById ${error}`);

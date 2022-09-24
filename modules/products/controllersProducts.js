@@ -38,24 +38,24 @@ const addProduct = async (req, res) => {
     const newId = await productService.addProductToList(newProduct);
     newProduct.id = newId
     /* productService.getListProducts(); */
-    res.send(newProduct);
+    res.status(200).send(newProduct);
 }
 
 //Recibe y actualiza un producto por id
-const updateProduct = (req, res) => {
+const updateProduct = async (req, res) => {
     const id = parseInt(req.params.id);
     const newData = req.body;
-    const updatedProduct = productService.replaceProduct(id, newData);
-    if (updatedProduct.length == 0) res.status(404).send({error: "producto no encontrado"});
-    else res.send('producto modificado');
+    const updatedProduct = await productService.replaceProduct(id, newData);
+    if (!updatedProduct) res.status(404).send({error: "producto no encontrado"});
+    else res.status(200).send(updatedProduct);
 };
 
 //Para borrar un producto según el id
-const deleteProductById = (req, res) => {
+const deleteProductById = async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = productService.deleteProduct(id);
-    if (result.deletedCount == 0) res.status(404).send({error: "producto no encontrado"});
-    else res.send("producto eliminado");
+    const result = await productService.deleteProduct(id);
+    if (result == 0) res.status(404).send({error: "producto no encontrado"});
+    else res.status(200).send("producto eliminado");
 };
 
 const productsToShow = (items) => {
